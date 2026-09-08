@@ -1,0 +1,535 @@
+{
+  "checkpoint": "XTTS-v2-accent-finetune-filtered_full",
+  "dataset": "vctk",
+  "split": "test.tsv",
+  "prompt_mode": "self",
+  "n_split_total": 2596,
+  "n_utterances": 2596,
+  "n_predicted": 2596,
+  "n_synthesis_failed": 0,
+  "failed_uids": [],
+  "synthesis_errors": {},
+  "metrics": {
+    "dnsmos_p808": {
+      "mean": 3.7372095803336656,
+      "ci95": 0.008746800734837528,
+      "n": 2596
+    },
+    "dnsmos_sig": {
+      "mean": 3.5120794996164744,
+      "ci95": 0.004743845892089181,
+      "n": 2596
+    },
+    "dnsmos_bak": {
+      "mean": 4.038943327940924,
+      "ci95": 0.0041210780264933815,
+      "n": 2596
+    },
+    "dnsmos_ovr": {
+      "mean": 3.205419825182971,
+      "ci95": 0.005773218561582497,
+      "n": 2596
+    },
+    "utmosv2": {
+      "mean": 3.1239060694337444,
+      "ci95": 0.018412183513723708,
+      "n": 2596
+    },
+    "wer": {
+      "mean": 0.03800524934383202,
+      "ci95": null,
+      "n": 2596
+    },
+    "wer_whisper_normalized": {
+      "mean": 0.014204250907205807,
+      "ci95": null,
+      "n": 2596
+    },
+    "speaker_cosine": {
+      "mean": 0.6425018470808979,
+      "ci95": 0.0028655259452598494,
+      "n": 2596
+    },
+    "accent_cosine": {
+      "mean": 0.6629693661579641,
+      "ci95": 0.004920620780945429,
+      "n": 2596
+    }
+  },
+  "by_accent": {
+    "American": {
+      "n": 417,
+      "utmosv2": {
+        "mean": 3.1919074115707433,
+        "ci95": 0.04899848326635131,
+        "n": 417
+      },
+      "dnsmos_ovr": {
+        "mean": 3.2129934348735456,
+        "ci95": 0.015191442539911386,
+        "n": 417
+      },
+      "dnsmos_p808": {
+        "mean": 3.7321396171331975,
+        "ci95": 0.019667431673024302,
+        "n": 417
+      },
+      "speaker_cosine": {
+        "mean": 0.6029053687048759,
+        "ci95": 0.007406381042289486,
+        "n": 417
+      },
+      "wer": {
+        "mean": 0.034643570952698204,
+        "ci95": null,
+        "n": 417
+      },
+      "accent_cosine": {
+        "mean": 0.7657888551696027,
+        "ci95": 0.008692575968826534,
+        "n": 417
+      },
+      "accent_label_agreement": {
+        "target_commonaccent_label": "us",
+        "pred_labelled_as_target": 0.9400479616306955,
+        "gt_labelled_as_target": 0.9712230215827338,
+        "pred_matches_gt_label": 0.9280575539568345
+      }
+    },
+    "Canadian": {
+      "n": 423,
+      "utmosv2": {
+        "mean": 2.8887226654846336,
+        "ci95": 0.04495244134589069,
+        "n": 423
+      },
+      "dnsmos_ovr": {
+        "mean": 3.116727280467586,
+        "ci95": 0.015910193512415505,
+        "n": 423
+      },
+      "dnsmos_p808": {
+        "mean": 3.5622628019385596,
+        "ci95": 0.019885365984713195,
+        "n": 423
+      },
+      "speaker_cosine": {
+        "mean": 0.6939643395989781,
+        "ci95": 0.005471710025029037,
+        "n": 423
+      },
+      "wer": {
+        "mean": 0.05048231511254019,
+        "ci95": null,
+        "n": 423
+      },
+      "accent_cosine": {
+        "mean": 0.7711567699768301,
+        "ci95": 0.0076801352261921885,
+        "n": 423
+      },
+      "accent_label_agreement": {
+        "target_commonaccent_label": "canada",
+        "pred_labelled_as_target": 0.061465721040189124,
+        "gt_labelled_as_target": 0.02127659574468085,
+        "pred_matches_gt_label": 0.91725768321513
+      }
+    },
+    "English": {
+      "n": 462,
+      "utmosv2": {
+        "mean": 2.9892874053030303,
+        "ci95": 0.030950168705676948,
+        "n": 462
+      },
+      "dnsmos_ovr": {
+        "mean": 3.1888335926221987,
+        "ci95": 0.012174887346364415,
+        "n": 462
+      },
+      "dnsmos_p808": {
+        "mean": 3.8928009701362467,
+        "ci95": 0.016160424361400114,
+        "n": 462
+      },
+      "speaker_cosine": {
+        "mean": 0.6153825602748177,
+        "ci95": 0.005514110400816449,
+        "n": 462
+      },
+      "wer": {
+        "mean": 0.05127462340672074,
+        "ci95": null,
+        "n": 462
+      },
+      "accent_cosine": {
+        "mean": 0.5844106974152775,
+        "ci95": 0.010138994554156943,
+        "n": 462
+      },
+      "accent_label_agreement": {
+        "target_commonaccent_label": "england",
+        "pred_labelled_as_target": 0.645021645021645,
+        "gt_labelled_as_target": 0.23160173160173161,
+        "pred_matches_gt_label": 0.41774891774891776
+      }
+    },
+    "Irish": {
+      "n": 412,
+      "utmosv2": {
+        "mean": 3.3003593370752426,
+        "ci95": 0.04225662705960594,
+        "n": 412
+      },
+      "dnsmos_ovr": {
+        "mean": 3.257227294681117,
+        "ci95": 0.014467287080912222,
+        "n": 412
+      },
+      "dnsmos_p808": {
+        "mean": 3.6387993357300594,
+        "ci95": 0.019936078248322515,
+        "n": 412
+      },
+      "speaker_cosine": {
+        "mean": 0.6402879019530074,
+        "ci95": 0.006890903182265201,
+        "n": 412
+      },
+      "wer": {
+        "mean": 0.022355163727959697,
+        "ci95": null,
+        "n": 412
+      },
+      "accent_cosine": {
+        "mean": 0.6290066517455485,
+        "ci95": 0.011138414141320555,
+        "n": 412
+      },
+      "accent_label_agreement": {
+        "target_commonaccent_label": "ireland",
+        "pred_labelled_as_target": 0.0,
+        "gt_labelled_as_target": 0.03640776699029126,
+        "pred_matches_gt_label": 0.308252427184466
+      }
+    },
+    "NorthernIrish": {
+      "n": 423,
+      "utmosv2": {
+        "mean": 3.49608451536643,
+        "ci95": 0.033733914166301116,
+        "n": 423
+      },
+      "dnsmos_ovr": {
+        "mean": 3.2245735433117857,
+        "ci95": 0.01102853045956282,
+        "n": 423
+      },
+      "dnsmos_p808": {
+        "mean": 3.8417985085135014,
+        "ci95": 0.016920281132164598,
+        "n": 423
+      },
+      "speaker_cosine": {
+        "mean": 0.6153157032127922,
+        "ci95": 0.006032775133873801,
+        "n": 423
+      },
+      "wer": {
+        "mean": 0.019178082191780823,
+        "ci95": null,
+        "n": 423
+      },
+      "accent_cosine": {
+        "mean": 0.6447817796651917,
+        "ci95": 0.010036742706727223,
+        "n": 423
+      },
+      "accent_label_agreement": {
+        "target_commonaccent_label": "ireland",
+        "pred_labelled_as_target": 0.0,
+        "gt_labelled_as_target": 0.17494089834515367,
+        "pred_matches_gt_label": 0.3262411347517731
+      }
+    },
+    "Scottish": {
+      "n": 459,
+      "utmosv2": {
+        "mean": 2.9129901960784315,
+        "ci95": 0.03849282349995656,
+        "n": 459
+      },
+      "dnsmos_ovr": {
+        "mean": 3.2328161005968936,
+        "ci95": 0.01207835863056153,
+        "n": 459
+      },
+      "dnsmos_p808": {
+        "mean": 3.7383802643936814,
+        "ci95": 0.01915433066048539,
+        "n": 459
+      },
+      "speaker_cosine": {
+        "mean": 0.6853865788912721,
+        "ci95": 0.005684290157329109,
+        "n": 459
+      },
+      "wer": {
+        "mean": 0.046902654867256637,
+        "ci95": null,
+        "n": 459
+      },
+      "accent_cosine": {
+        "mean": 0.5961903116801726,
+        "ci95": 0.010058313493105427,
+        "n": 459
+      },
+      "accent_label_agreement": {
+        "target_commonaccent_label": "scotland",
+        "pred_labelled_as_target": 0.10675381263616558,
+        "gt_labelled_as_target": 0.037037037037037035,
+        "pred_matches_gt_label": 0.5054466230936819
+      }
+    }
+  },
+  "by_speaker": {
+    "p270": {
+      "n": 462,
+      "utmosv2": {
+        "mean": 2.9892874053030303,
+        "ci95": 0.030950168705676948,
+        "n": 462
+      },
+      "dnsmos_ovr": {
+        "mean": 3.1888335926221987,
+        "ci95": 0.012174887346364415,
+        "n": 462
+      },
+      "dnsmos_p808": {
+        "mean": 3.8928009701362467,
+        "ci95": 0.016160424361400114,
+        "n": 462
+      },
+      "speaker_cosine": {
+        "mean": 0.6153825602748177,
+        "ci95": 0.005514110400816449,
+        "n": 462
+      },
+      "wer": {
+        "mean": 0.05127462340672074,
+        "ci95": null,
+        "n": 462
+      },
+      "accent_cosine": {
+        "mean": 0.5844106974152775,
+        "ci95": 0.010138994554156943,
+        "n": 462
+      },
+      "accent_label_agreement": {
+        "target_commonaccent_label": "england",
+        "pred_labelled_as_target": 0.645021645021645,
+        "gt_labelled_as_target": 0.23160173160173161,
+        "pred_matches_gt_label": 0.41774891774891776
+      }
+    },
+    "p281": {
+      "n": 459,
+      "utmosv2": {
+        "mean": 2.9129901960784315,
+        "ci95": 0.03849282349995656,
+        "n": 459
+      },
+      "dnsmos_ovr": {
+        "mean": 3.2328161005968936,
+        "ci95": 0.01207835863056153,
+        "n": 459
+      },
+      "dnsmos_p808": {
+        "mean": 3.7383802643936814,
+        "ci95": 0.01915433066048539,
+        "n": 459
+      },
+      "speaker_cosine": {
+        "mean": 0.6853865788912721,
+        "ci95": 0.005684290157329109,
+        "n": 459
+      },
+      "wer": {
+        "mean": 0.046902654867256637,
+        "ci95": null,
+        "n": 459
+      },
+      "accent_cosine": {
+        "mean": 0.5961903116801726,
+        "ci95": 0.010058313493105427,
+        "n": 459
+      },
+      "accent_label_agreement": {
+        "target_commonaccent_label": "scotland",
+        "pred_labelled_as_target": 0.10675381263616558,
+        "gt_labelled_as_target": 0.037037037037037035,
+        "pred_matches_gt_label": 0.5054466230936819
+      }
+    },
+    "p288": {
+      "n": 412,
+      "utmosv2": {
+        "mean": 3.3003593370752426,
+        "ci95": 0.04225662705960594,
+        "n": 412
+      },
+      "dnsmos_ovr": {
+        "mean": 3.257227294681117,
+        "ci95": 0.014467287080912222,
+        "n": 412
+      },
+      "dnsmos_p808": {
+        "mean": 3.6387993357300594,
+        "ci95": 0.019936078248322515,
+        "n": 412
+      },
+      "speaker_cosine": {
+        "mean": 0.6402879019530074,
+        "ci95": 0.006890903182265201,
+        "n": 412
+      },
+      "wer": {
+        "mean": 0.022355163727959697,
+        "ci95": null,
+        "n": 412
+      },
+      "accent_cosine": {
+        "mean": 0.6290066517455485,
+        "ci95": 0.011138414141320555,
+        "n": 412
+      },
+      "accent_label_agreement": {
+        "target_commonaccent_label": "ireland",
+        "pred_labelled_as_target": 0.0,
+        "gt_labelled_as_target": 0.03640776699029126,
+        "pred_matches_gt_label": 0.308252427184466
+      }
+    },
+    "p297": {
+      "n": 417,
+      "utmosv2": {
+        "mean": 3.1919074115707433,
+        "ci95": 0.04899848326635131,
+        "n": 417
+      },
+      "dnsmos_ovr": {
+        "mean": 3.2129934348735456,
+        "ci95": 0.015191442539911386,
+        "n": 417
+      },
+      "dnsmos_p808": {
+        "mean": 3.7321396171331975,
+        "ci95": 0.019667431673024302,
+        "n": 417
+      },
+      "speaker_cosine": {
+        "mean": 0.6029053687048759,
+        "ci95": 0.007406381042289486,
+        "n": 417
+      },
+      "wer": {
+        "mean": 0.034643570952698204,
+        "ci95": null,
+        "n": 417
+      },
+      "accent_cosine": {
+        "mean": 0.7657888551696027,
+        "ci95": 0.008692575968826534,
+        "n": 417
+      },
+      "accent_label_agreement": {
+        "target_commonaccent_label": "us",
+        "pred_labelled_as_target": 0.9400479616306955,
+        "gt_labelled_as_target": 0.9712230215827338,
+        "pred_matches_gt_label": 0.9280575539568345
+      }
+    },
+    "p304": {
+      "n": 423,
+      "utmosv2": {
+        "mean": 3.49608451536643,
+        "ci95": 0.033733914166301116,
+        "n": 423
+      },
+      "dnsmos_ovr": {
+        "mean": 3.2245735433117857,
+        "ci95": 0.01102853045956282,
+        "n": 423
+      },
+      "dnsmos_p808": {
+        "mean": 3.8417985085135014,
+        "ci95": 0.016920281132164598,
+        "n": 423
+      },
+      "speaker_cosine": {
+        "mean": 0.6153157032127922,
+        "ci95": 0.006032775133873801,
+        "n": 423
+      },
+      "wer": {
+        "mean": 0.019178082191780823,
+        "ci95": null,
+        "n": 423
+      },
+      "accent_cosine": {
+        "mean": 0.6447817796651917,
+        "ci95": 0.010036742706727223,
+        "n": 423
+      },
+      "accent_label_agreement": {
+        "target_commonaccent_label": "ireland",
+        "pred_labelled_as_target": 0.0,
+        "gt_labelled_as_target": 0.17494089834515367,
+        "pred_matches_gt_label": 0.3262411347517731
+      }
+    },
+    "p317": {
+      "n": 423,
+      "utmosv2": {
+        "mean": 2.8887226654846336,
+        "ci95": 0.04495244134589069,
+        "n": 423
+      },
+      "dnsmos_ovr": {
+        "mean": 3.116727280467586,
+        "ci95": 0.015910193512415505,
+        "n": 423
+      },
+      "dnsmos_p808": {
+        "mean": 3.5622628019385596,
+        "ci95": 0.019885365984713195,
+        "n": 423
+      },
+      "speaker_cosine": {
+        "mean": 0.6939643395989781,
+        "ci95": 0.005471710025029037,
+        "n": 423
+      },
+      "wer": {
+        "mean": 0.05048231511254019,
+        "ci95": null,
+        "n": 423
+      },
+      "accent_cosine": {
+        "mean": 0.7711567699768301,
+        "ci95": 0.0076801352261921885,
+        "n": 423
+      },
+      "accent_label_agreement": {
+        "target_commonaccent_label": "canada",
+        "pred_labelled_as_target": 0.061465721040189124,
+        "gt_labelled_as_target": 0.02127659574468085,
+        "pred_matches_gt_label": 0.91725768321513
+      }
+    }
+  },
+  "accent_side_metric_source": "articulatory-tts@d8b53da9ae940e3ba979b427c037ddd560952958 score_side_metric.py",
+  "eval_code_commit": "b585ba9e79a3f68cc6d855778809b32e76a980f0",
+  "accent_cosine_per_utt_source": "eval/score_accent_per_utt.py (same model/call path as articulatory-tts score_side_metric.py)",
+  "wer_whisper_normalized_rule": "corpus jiwer.wer over WhisperTokenizer.normalize(ref/hyp); pairs with empty normalized reference skipped (articulatory-tts b040aa1 rule)"
+}

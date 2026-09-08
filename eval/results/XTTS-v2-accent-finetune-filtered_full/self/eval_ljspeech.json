@@ -1,0 +1,62 @@
+{
+  "checkpoint": "XTTS-v2-accent-finetune-filtered_full",
+  "dataset": "ljspeech",
+  "split": "test.json",
+  "prompt_mode": "self",
+  "n_split_total": 150,
+  "n_utterances": 150,
+  "n_predicted": 150,
+  "n_synthesis_failed": 0,
+  "failed_uids": [],
+  "synthesis_errors": {},
+  "metrics": {
+    "dnsmos_p808": {
+      "mean": 4.046676208072238,
+      "ci95": 0.019995425388401707,
+      "n": 150
+    },
+    "dnsmos_sig": {
+      "mean": 3.6613946977896688,
+      "ci95": 0.01420437003182989,
+      "n": 150
+    },
+    "dnsmos_bak": {
+      "mean": 4.135592353800356,
+      "ci95": 0.012825904415816335,
+      "n": 150
+    },
+    "dnsmos_ovr": {
+      "mean": 3.4022573840186356,
+      "ci95": 0.01817521521214002,
+      "n": 150
+    },
+    "utmosv2": {
+      "mean": 3.1580208333333335,
+      "ci95": 0.05674379637792945,
+      "n": 150
+    },
+    "wer": {
+      "mean": 0.10222052067381317,
+      "ci95": null,
+      "n": 150
+    },
+    "wer_whisper_normalized": {
+      "mean": 0.024399542508577964,
+      "ci95": null,
+      "n": 150
+    },
+    "speaker_cosine": {
+      "mean": 0.6817214985688528,
+      "ci95": 0.007660414926927773,
+      "n": 150
+    },
+    "accent_cosine": {
+      "mean": 0.7171904548009237,
+      "ci95": 0.017082134134890955,
+      "n": 150
+    }
+  },
+  "accent_side_metric_source": "articulatory-tts@43835009e57b58b251673b7e8b33dbae2e705425 score_side_metric.py",
+  "eval_code_commit": "b585ba9e79a3f68cc6d855778809b32e76a980f0",
+  "wer_whisper_normalized_rule": "corpus jiwer.wer over WhisperTokenizer.normalize(ref/hyp); pairs with empty normalized reference skipped (articulatory-tts b040aa1 rule)"
+}

@@ -17,6 +17,9 @@
   `by_accent`/`by_speaker`, `eval_vctk_accent_per_utt_commonaccent.json`).
   Tracked in the articulatory-tts issue "Track: accent_cosine CommonAccent ->
   GenAID rescore" (this fork has issues disabled).
+- `eval/README.md`: the SPARC and articulatory reference rows of the VCTK
+  table now carry their GenAID accent cosines (0.966 / 0.857 / 0.919) instead
+  of the CommonAccent values they still showed next to XTTS's GenAID cell.
 
 ## 2026-09-08 -- per-accent accent similarity (branch `accent_eval`)
 

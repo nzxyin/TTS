@@ -149,7 +149,10 @@ after Whisper's English normalizer -- the headline number. For GT/resynth
 `sparc_resynth_baselines/{gt,resynth}_transcripts_*.json`. The articulatory
 model rows were scored before that repo's 2026-09-08 normalizer fix, so they
 only have raw `WER`; its `werfix` re-scores (running at the time of writing)
-will provide `WER-n` for them.
+will provide `WER-n` for them. Every `accent cos` cell, including the SPARC and
+articulatory rows, is the GenAID value from the 2026-09-14 rescore
+(articulatory-tts job arrays 10441101/10441449); the CommonAccent-era values
+were 0.783 / 0.446 / 0.705 for the three VCTK reference rows.
 
 | LJSpeech (n=150) | WER | WER-n | UTMOSv2 | DNSMOS ovr | p808 | sig | bak | spk cos | accent cos |
 |---|---|---|---|---|---|---|---|---|---|
@@ -175,9 +178,9 @@ will provide `WER-n` for them.
 | VCTK held-out speakers (n=2596) | WER | WER-n | UTMOSv2 | DNSMOS ovr | p808 | sig | bak | spk cos | accent cos |
 |---|---|---|---|---|---|---|---|---|---|
 | ground truth | 3.70 | 1.21 | 3.593 | 3.202 | 3.640 | 3.517 | 4.003 | -- | -- |
-| SPARC resynthesis | 5.77 | 2.73 | 3.145 | 3.189 | 3.545 | 3.492 | 4.031 | 0.646 | 0.783 |
-| articulatory, softdtw large_dim 25k (zero-shot, known rate) | 3.42 | -- | 2.651 | 3.132 | 3.620 | 3.479 | 3.927 | 0.424 | 0.446 |
-| articulatory, VCTK fine-tune softdtw replay 25k (known rate) | 3.75 | -- | 3.326 | 3.247 | 3.597 | 3.536 | 4.068 | 0.519 | 0.705 |
+| SPARC resynthesis | 5.77 | 2.73 | 3.145 | 3.189 | 3.545 | 3.492 | 4.031 | 0.646 | 0.966 |
+| articulatory, softdtw large_dim 25k (zero-shot, known rate) | 3.42 | -- | 2.651 | 3.132 | 3.620 | 3.479 | 3.927 | 0.424 | 0.857 |
+| articulatory, VCTK fine-tune softdtw replay 25k (known rate) | 3.75 | -- | 3.326 | 3.247 | 3.597 | 3.536 | 4.068 | 0.519 | 0.919 |
 | **XTTS-v2 accent (filtered)** | **3.80** | **1.42** | **3.124** | **3.205** | **3.737** | **3.512** | **4.039** | **0.643** | **0.930** |
 
 XTTS per VCTK accent (one held-out speaker per accent; from `by_accent` in

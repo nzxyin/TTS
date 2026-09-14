@@ -23,7 +23,7 @@ cd "$SLURM_SUBMIT_DIR"
 export HF_HOME=/data/user_data/xoy/.cache/huggingface
 VENV=/data/user_data/xoy/venvs/xtts-accent
 EVAL_VENV=/data/user_data/xoy/venvs/eval-articulatory-tts
-ACCENT_VENV=/data/user_data/xoy/venvs/eval-accent
+ACCENT_VENV=/data/user_data/xoy/venvs/eval-genaid
 CKPT_NAME=XTTS-v2-accent-finetune-filtered_full
 CKPT_DIR=/data/user_data/xoy/xtts_accent_checkpoints/$CKPT_NAME
 OUT_ROOT=/data/user_data/xoy/xtts_accent_eval/$CKPT_NAME/smoke

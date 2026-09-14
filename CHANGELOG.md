@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-09-14 -- accent similarity: CommonAccent -> GenAID (branch `accent_eval`)
+
+- The accent side metric now uses GenAID (https://github.com/jzmzhong/GenAID,
+  GenAID_v6; speaker-adversarial XLSR-53 accent ID, 64-dim embedding), via the
+  reference repo's `genaid_accent.py` and its new `eval-genaid` venv; the
+  articulatory-tts `score_side_metric.py` that `eval/run_score.sbatch` calls
+  made the same switch. `eval/score_accent_per_utt.py` embeds with the same
+  code and records GenAID's 13-way top label for prediction and ground truth
+  (`pred_label`/`gt_label`, replacing the CommonAccent 16-way fields).
+  `run_score.sbatch`, `run_accent_per_utt.sbatch`, `smoke_test.sbatch` point
+  at the new venv and exclude the Blackwell nodes it cannot run on.
+- `eval/run_rescore_accent_genaid.sbatch` (job 10441102, 4 tasks) rescores
+  the four result JSONs on their kept 16 kHz wav pairs; CommonAccent values
+  stay as `metrics.accent_cosine_commonaccent` (and `*_commonaccent` keys in
+  `by_accent`/`by_speaker`, `eval_vctk_accent_per_utt_commonaccent.json`).
+  Tracked in the articulatory-tts issue "Track: accent_cosine CommonAccent ->
+  GenAID rescore" (this fork has issues disabled).
+
 ## 2026-09-08 -- per-accent accent similarity (branch `accent_eval`)
 
 - Added `eval/score_accent_per_utt.py` + `eval/run_accent_per_utt.sbatch`:

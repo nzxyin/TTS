@@ -25,23 +25,31 @@ chronological record of changes is in `CHANGELOG.md`.
 - **Filtered checkpoint evaluated on the articulatory-tts test sets** (LJSpeech
   test, LibriTTS-R test-clean/test-other, VCTK held-out speakers; ESD dropped
   by user direction) with the articulatory-tts metric stack (Whisper-large-v3
-  corpus WER, UTMOSv2, DNSMOS, ECAPA speaker cosine, CommonAccent accent
+  corpus WER, UTMOSv2, DNSMOS, ECAPA speaker cosine, GenAID accent
   cosine). Full tables and reading notes: `eval/README.md`; JSONs:
   `eval/results/`. Headline: XTTS matches ground-truth intelligibility within
   ~1 point of normalized WER on every set (VCTK 1.4%, LJSpeech 2.4%,
   test-clean 2.6%, test-other 3.0%), speaker cosine 0.62-0.68, UTMOSv2
-  2.98-3.16, accent cosine 0.66 on VCTK. Under the reference's
+  2.98-3.16, accent cosine 0.93 on VCTK (GenAID; 0.95 / 0.96 / 0.91 on
+  LJSpeech / test-clean / test-other). Under the reference's
   punctuation-sensitive WER it reads 3.8% / 10.2% / 10.7% / 13.0%.
-- **Per-accent accent similarity on VCTK (2026-09-08, `eval/score_accent_per_utt.py`):**
-  accent cosine is high for the two North-American test speakers (American
-  0.77, Canadian 0.77) and lower for the British/Irish ones (English 0.58,
-  Scottish 0.60, Irish 0.63, Northern Irish 0.64). The CommonAccent
-  classifier labels XTTS's American-tagged output as `us` 94% of the time but
-  almost never labels the Irish/Scottish-tagged output with the target class;
-  it also rarely labels the *ground-truth* VCTK Irish/Scottish recordings
-  correctly (4%/4%), so the label view mostly reflects that classifier's
-  weakness on VCTK, not a verdict on the accent control. Table and caveats in
-  `eval/README.md`.
+- **Accent metric switched to GenAID (2026-09-14, all four sets rescored on
+  the kept wav pairs, job 10441102).** GenAID (https://github.com/jzmzhong/GenAID,
+  speaker-adversarial XLSR-53 accent ID, 64-dim embedding) replaced
+  CommonAccent in the reference repo's `score_side_metric.py`; the
+  CommonAccent values (LJSpeech 0.717, test-clean 0.785, test-other 0.639,
+  VCTK 0.663) are kept in every JSON as `accent_cosine_commonaccent` and are
+  not comparable with GenAID's. GenAID cosines sit in a compressed 0.85-0.99
+  band across every system, so read differences rather than absolute values.
+- **Per-accent accent similarity on VCTK (GenAID, `eval/score_accent_per_utt.py`):**
+  American 0.950, Canadian 0.962, English 0.939, Scottish 0.928, Northern
+  Irish 0.919, Irish 0.879 -- the North-American speakers still lead, Irish is
+  now clearly last (CommonAccent had a North-American ~0.77 vs British/Irish
+  0.58-0.65 split). GenAID's own labels recognise the American, English and
+  Scottish ground truth (95/76/44%) but not the Canadian or Northern Irish
+  speaker (3/5%); where it does, XTTS output is labelled with the target class
+  84% (American), 75% (English) and 69% (Scottish -- more often than the real
+  Scottish recordings) of the time. Table and caveats in `eval/README.md`.
 - **Protocol** (see `eval/README.md`): self prompt (target utterance as the
   speaker reference, mirroring the articulatory model's use of the target's
   own speaker embedding); explicit accent tag always passed (`US` for

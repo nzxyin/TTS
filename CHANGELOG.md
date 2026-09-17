@@ -1,5 +1,31 @@
 # Changelog
 
+## 2026-09-16 -- accent similarity: raw GenAID -> centroid-centered GenAID (branch `eval/accent-centering`)
+
+- The accent side metric now reports the CENTERED GenAID cosine as the headline `accent_cosine` -- both the
+  prediction and ground-truth embeddings have `genaid_accent.DEFAULT_CENTER_VECTOR` (the mean of the six
+  speaker-balanced VCTK-training-speaker accent centroids) subtracted before the cosine, per the
+  articulatory-tts diagnostic (that repo's `CLAUDE.md` "Accent-metric diagnostic" section, decision
+  2026-09-16; tracked in `nzxyin/articulatory-tts` issue #51 -- this fork has issues disabled, see
+  `eval/README.md` "Known issues"). The raw (uncentered) GenAID cosine is kept alongside as
+  `accent_cosine_genaid_raw`; the `*_commonaccent` keys from the 2026-09-14 CommonAccent -> GenAID rescore
+  are untouched throughout.
+- `eval/score_accent_per_utt.py`: added `--center_vector`/`--no_center` (same flags as the reference repo's
+  `score_side_metric.py`/`score_side_per_utt.py`). Per-utterance and per-group (`by_accent`/`by_speaker`)
+  records now carry both `accent_cosine` (centered by default) and `accent_cosine_genaid_raw`; a PREVIOUS
+  raw-GenAID per-group `accent_cosine` value is preserved under `accent_cosine_genaid_raw` before being
+  overwritten, unless already present (idempotent against re-runs). `results["accent_center_vector"]` records
+  the vector path actually used (`null` under `--no_center`); the per-utt provenance field
+  `accent_cosine_per_utt_source` now records the centered model tag.
+- Added `eval/run_rescore_accent_centered.sbatch` -- VCTK only (the only set with a per-accent breakdown; the
+  other three carry `accent_cosine` as an aggregate side metric only). Re-runs
+  `articulatory-tts/score_side_metric.py --metric accent --center_vector ...` on the kept 16 kHz wav pairs,
+  merges with `--keep_old_as genaid_raw`, updates provenance
+  (`accent_side_metric_source`/`accent_side_metric_source_genaid_raw`), and redoes the per-accent/per-speaker
+  breakdown with the updated `score_accent_per_utt.py`. Skip condition: `"centroid-centered" in
+  metrics.accent_cosine.model`. **Not yet run** -- numbers in `CLAUDE.md` and `eval/README.md` still reflect
+  the raw GenAID values from the 2026-09-14 rescore until this job completes and the tables are refreshed.
+
 ## 2026-09-14 -- accent similarity: CommonAccent -> GenAID (branch `accent_eval`)
 
 - The accent side metric now uses GenAID (https://github.com/jzmzhong/GenAID,

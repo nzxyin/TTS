@@ -41,6 +41,17 @@ chronological record of changes is in `CHANGELOG.md`.
   VCTK 0.663) are kept in every JSON as `accent_cosine_commonaccent` and are
   not comparable with GenAID's. GenAID cosines sit in a compressed 0.85-0.99
   band across every system, so read differences rather than absolute values.
+- **Accent metric re-centered (2026-09-16, branch `eval/accent-centering`; not yet rescored).** The
+  articulatory-tts accent-metric diagnostic (that repo's `CLAUDE.md` "Accent-metric diagnostic" section)
+  found GenAID's compressed 0.85-0.99 band is a positive-orthant display artifact, removable by subtracting a
+  fixed centering vector without changing effect sizes -- and decided (2026-09-16) that the published
+  `accent_cosine` should be this CENTERED value going forward (vector = mean of the six speaker-balanced
+  VCTK-training-speaker accent centroids). Tracked in `nzxyin/articulatory-tts` issue #51 (this fork has
+  issues disabled). `eval/score_accent_per_utt.py` gained `--center_vector`/`--no_center`
+  (`genaid_accent.DEFAULT_CENTER_VECTOR` by default) and now writes the raw GenAID cosine alongside as
+  `accent_cosine_genaid_raw`; `eval/run_rescore_accent_centered.sbatch` (VCTK only) does the rescore on the
+  kept wav pairs. **Not yet run** -- every GenAID number in this file and in `eval/README.md` (the 0.85-0.99
+  band above, the per-accent table below) is still the RAW value; re-derive both once the job completes.
 - **Per-accent accent similarity on VCTK (GenAID, `eval/score_accent_per_utt.py`):**
   American 0.950, Canadian 0.962, English 0.939, Scottish 0.928, Northern
   Irish 0.919, Irish 0.879 -- the North-American speakers still lead, Irish is

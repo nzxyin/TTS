@@ -10,17 +10,39 @@ every per-utterance value, then folds per-accent and per-speaker summaries
 into the dataset's results JSON ("by_accent"/"by_speaker" -> accent_cosine)
 and asserts the overall mean reproduces the merged accent_cosine.
 
+2026-09-16: the published accent_cosine is CENTERED -- both the prediction and
+ground-truth embeddings have genaid_accent.DEFAULT_CENTER_VECTOR (the mean of
+the six speaker-balanced VCTK-training-speaker accent centroids; see the
+reference repo's CLAUDE.md "Accent-metric diagnostic") subtracted before the
+cosine, via genaid_accent.accent_cosines(). The raw (uncentered) GenAID cosine
+is kept alongside as accent_cosine_genaid_raw, per utterance AND per group
+(--no_center restores raw-only behaviour; --center_vector swaps the vector --
+same flags as the reference repo's score_side_metric.py/score_side_per_utt.py).
+The by_accent/by_speaker summaries and the overall consistency assertion
+against the merged metrics.accent_cosine both use whichever value this run
+actually wrote as accent_cosine (centered by default), since the merge this
+script checks against comes from the same score_side_metric.py invocation.
+When re-run over a results JSON whose by_accent/by_speaker groups still carry
+a PREVIOUS (raw-GenAID) per-group accent_cosine, that old value is preserved
+under accent_cosine_genaid_raw first, unless already present (idempotent
+against re-runs); pre-existing *_commonaccent keys (from the 2026-09-14
+CommonAccent -> GenAID rescore) are never touched. The centering vector
+actually used (or null under --no_center) is recorded in
+results["accent_center_vector"].
+
 As extra context for accent analysis it also records the classifier's own
 top label for the prediction and for the ground truth (GenAID's 13-way
 label) and, per accent group, how often each side is labelled with the
 intended class. That is an accent-classification view, not the
-embedding-cosine metric; it is stored under "accent_label_agreement", never
-under accent_cosine.
+embedding-cosine metric (unaffected by centering, since centering only
+changes the cosine, not the classifier's argmax); it is stored under
+"accent_label_agreement", never under accent_cosine.
 
 2026-09-14: GenAID replaces CommonAccent (Jzuluaga/accent-id-commonaccent_xlsr-en-english,
 speechbrain foreign_class encode_batch()); see the reference repo's
 genaid_accent.py for why. Run under /data/user_data/xoy/venvs/eval-genaid/bin/python
-(the same venv the reference side metric uses) -- see eval/run_accent_per_utt.sbatch.
+(the same venv the reference side metric uses) -- see eval/run_accent_per_utt.sbatch
+and eval/run_rescore_accent_centered.sbatch.
 """
 import argparse
 import json
@@ -35,7 +57,7 @@ import soundfile as sf
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from synthesize_testset import load_items  # noqa: E402
 
-ART_REPO = "/home/xoy/articulatory-tts"  # genaid_accent.py lives with the reference side metric
+ART_REPO = os.environ.get("ART_REPO", "/home/xoy/articulatory-tts")  # genaid_accent.py lives with the reference side metric
 sys.path.insert(0, ART_REPO)
 
 MIN_PAIR_DURATION_SEC = 0.1  # same floor as score_side_metric.py
@@ -51,10 +73,6 @@ def summarize(values):
     return {"mean": float(values.mean()), "ci95": float(1.96 * values.std() / np.sqrt(len(values))), "n": int(len(values))}
 
 
-def cosine(a, b):
-    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-8))
-
-
 def too_short(path):
     with sf.SoundFile(path) as f:
         return len(f) / f.samplerate < MIN_PAIR_DURATION_SEC
@@ -67,6 +85,10 @@ def main():
     ap.add_argument("--results_path", required=True, help="eval_<dataset>.json to update in place (by_accent/by_speaker)")
     ap.add_argument("--per_utt_out", required=True)
     ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--center_vector", default=None,
+                    help="path of the (64,) .npy centering vector subtracted from both embeddings before "
+                         "the cosine (default: genaid_accent.DEFAULT_CENTER_VECTOR, the 2026-09-16 centroid mean)")
+    ap.add_argument("--no_center", action="store_true", help="report the raw (uncentered) GenAID cosine only")
     args = ap.parse_args()
 
     import torch
@@ -74,12 +96,16 @@ def main():
     import genaid_accent
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    center = None if args.no_center else (args.center_vector or genaid_accent.DEFAULT_CENTER_VECTOR)
+    mu = genaid_accent.load_center_vector(center) if center else None
+    model_tag = genaid_accent.centered_model_tag(center) if center else genaid_accent.MODEL_TAG
+
     items = load_items(args.dataset)
     if args.limit:
         items = items[: args.limit]
     # identical model/loading to score_side_metric.py's score_accent()
     embedder = genaid_accent.GenAIDEmbedder(device)
-    print("accent model:", genaid_accent.MODEL_TAG)
+    print("accent model:", model_tag)
     VCTK_TO_GENAID = genaid_accent.VCTK_TO_GENAID
     cache = {}
 
@@ -110,9 +136,10 @@ def main():
                 continue
             pl, ps = label(pred)
             gl, gs = label(gt)
+            c, r = genaid_accent.accent_cosines(embed(pred), embed(gt), mu)
             records[it["uid"]] = {
                 "speaker": it["speaker"], "accent_label": it["accent_label"], "xtts_accent": it["xtts_accent"],
-                "accent_cosine": cosine(embed(pred), embed(gt)),
+                "accent_cosine": c, "accent_cosine_genaid_raw": r,
                 "pred_label": pl, "pred_label_prob": ps,
                 "gt_label": gl, "gt_label_prob": gs,
             }
@@ -127,7 +154,8 @@ def main():
             groups.setdefault(r[key], []).append(r)
         out = {}
         for g, recs in sorted(groups.items()):
-            entry = {"n": len(recs), "accent_cosine": summarize([r["accent_cosine"] for r in recs])}
+            entry = {"n": len(recs), "accent_cosine": summarize([r["accent_cosine"] for r in recs]),
+                     "accent_cosine_genaid_raw": summarize([r["accent_cosine_genaid_raw"] for r in recs])}
             target = VCTK_TO_GENAID.get(recs[0]["accent_label"]) if key in ("accent_label", "speaker") else None
             if target:
                 entry["accent_label_agreement"] = {
@@ -150,9 +178,17 @@ def main():
         if len({r[key] for r in records.values()}) > 1:
             results.setdefault(field, {})
             for g, entry in by(key).items():
-                results[field].setdefault(g, {}).update(entry)
+                e = results[field].setdefault(g, {})
+                # Keep a previous raw-GenAID per-group accent_cosine (written by an earlier, uncentered run
+                # of this script) as accent_cosine_genaid_raw, unless already present -- idempotent against
+                # re-runs. Never touches *_commonaccent keys (a separate, unrelated axis from the 2026-09-14
+                # CommonAccent -> GenAID rescore) or accent_label_agreement (unaffected by centering).
+                if "accent_cosine" in e and "accent_cosine_genaid_raw" not in e:
+                    e["accent_cosine_genaid_raw"] = e.pop("accent_cosine")
+                e.update(entry)
     results["accent_cosine_per_utt_source"] = (f"eval/score_accent_per_utt.py (same model/call path as articulatory-tts "
-                                               f"score_side_metric.py; {genaid_accent.MODEL_TAG})")
+                                               f"score_side_metric.py; {model_tag})")
+    results["accent_center_vector"] = os.path.abspath(center) if center else None
 
     for path, obj, kw in ((args.per_utt_out, records, {"indent": 1}), (args.results_path, results, {"indent": 2})):
         os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
@@ -164,7 +200,10 @@ def main():
         print(f"{'accent':14s} {'n':>5s} {'accent_cos':>10s} {'pred->target':>12s} {'gt->target':>10s}")
         for g, e in results["by_accent"].items():
             agr = e.get("accent_label_agreement", {})
-            print(f"{g:14s} {e['n']:5d} {e['accent_cosine']['mean']:10.4f} {agr.get('pred_labelled_as_target', float('nan')):12.3f} {agr.get('gt_labelled_as_target', float('nan')):10.3f}")
+            acc = e.get("accent_cosine") or {}
+            acc_str = f"{acc['mean']:10.4f}" if acc.get("mean") is not None else f"{'--':>10s}"
+            print(f"{g:14s} {e.get('n', 0):5d} {acc_str} "
+                  f"{agr.get('pred_labelled_as_target', float('nan')):12.3f} {agr.get('gt_labelled_as_target', float('nan')):10.3f}")
     print(f"wrote {args.per_utt_out} and updated {args.results_path}")
 
 

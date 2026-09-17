@@ -51,9 +51,22 @@
       "n": 2596
     },
     "accent_cosine": {
+      "mean": 0.6253199235234027,
+      "ci95": 0.012825609751525633,
+      "n": 2596,
+      "model": "GenAID_v6 (jzmzhong/GenAID@60317a8, CKPT+2024-07-21+23-06-07+00); centroid-centered: mean of the six speaker-balanced accent centroids of the VCTK-only training speakers (accent_metric_diag/export_centered_genaid.py, 2026-09-16); center_vector=genaid_emb_centroid_mean.npy",
+      "center_vector": "/home/xoy/wt-center/accent_metric_diag/results/genaid_emb_centroid_mean.npy"
+    },
+    "accent_cosine_commonaccent": {
       "mean": 0.6629693661579641,
       "ci95": 0.004920620780945429,
       "n": 2596
+    },
+    "accent_cosine_genaid_raw": {
+      "mean": 0.9298151139870895,
+      "ci95": 0.0021961606097168846,
+      "n": 2596,
+      "model": "GenAID_v6 (jzmzhong/GenAID@60317a8, CKPT+2024-07-21+23-06-07+00)"
     }
   },
   "by_accent": {
@@ -84,16 +97,32 @@
         "ci95": null,
         "n": 417
       },
-      "accent_cosine": {
+      "accent_cosine_commonaccent": {
         "mean": 0.7657888551696027,
         "ci95": 0.008692575968826534,
         "n": 417
       },
-      "accent_label_agreement": {
+      "accent_label_agreement_commonaccent": {
         "target_commonaccent_label": "us",
         "pred_labelled_as_target": 0.9400479616306955,
         "gt_labelled_as_target": 0.9712230215827338,
         "pred_matches_gt_label": 0.9280575539568345
+      },
+      "accent_label_agreement": {
+        "target_label": "us",
+        "pred_labelled_as_target": 0.841726618705036,
+        "gt_labelled_as_target": 0.947242206235012,
+        "pred_matches_gt_label": 0.829736211031175
+      },
+      "accent_cosine_genaid_raw": {
+        "mean": 0.9504653054533855,
+        "ci95": 0.004496694709040294,
+        "n": 417
+      },
+      "accent_cosine": {
+        "mean": 0.7835569000091654,
+        "ci95": 0.019130928699803967,
+        "n": 417
       }
     },
     "Canadian": {
@@ -123,16 +152,32 @@
         "ci95": null,
         "n": 423
       },
-      "accent_cosine": {
+      "accent_cosine_commonaccent": {
         "mean": 0.7711567699768301,
         "ci95": 0.0076801352261921885,
         "n": 423
       },
-      "accent_label_agreement": {
+      "accent_label_agreement_commonaccent": {
         "target_commonaccent_label": "canada",
         "pred_labelled_as_target": 0.061465721040189124,
         "gt_labelled_as_target": 0.02127659574468085,
         "pred_matches_gt_label": 0.91725768321513
+      },
+      "accent_label_agreement": {
+        "target_label": "canadian",
+        "pred_labelled_as_target": 0.04728132387706856,
+        "gt_labelled_as_target": 0.03309692671394799,
+        "pred_matches_gt_label": 0.851063829787234
+      },
+      "accent_cosine_genaid_raw": {
+        "mean": 0.9618271305943754,
+        "ci95": 0.003256212274710458,
+        "n": 423
+      },
+      "accent_cosine": {
+        "mean": 0.8129196058132888,
+        "ci95": 0.015484708631980938,
+        "n": 423
       }
     },
     "English": {
@@ -162,16 +207,32 @@
         "ci95": null,
         "n": 462
       },
-      "accent_cosine": {
+      "accent_cosine_commonaccent": {
         "mean": 0.5844106974152775,
         "ci95": 0.010138994554156943,
         "n": 462
       },
-      "accent_label_agreement": {
+      "accent_label_agreement_commonaccent": {
         "target_commonaccent_label": "england",
         "pred_labelled_as_target": 0.645021645021645,
         "gt_labelled_as_target": 0.23160173160173161,
         "pred_matches_gt_label": 0.41774891774891776
+      },
+      "accent_label_agreement": {
+        "target_label": "english",
+        "pred_labelled_as_target": 0.7510822510822511,
+        "gt_labelled_as_target": 0.7554112554112554,
+        "pred_matches_gt_label": 0.6688311688311688
+      },
+      "accent_cosine_genaid_raw": {
+        "mean": 0.9392671666708542,
+        "ci95": 0.0036934148273197295,
+        "n": 462
+      },
+      "accent_cosine": {
+        "mean": 0.746039336137739,
+        "ci95": 0.015775168674907372,
+        "n": 462
       }
     },
     "Irish": {
@@ -201,16 +262,32 @@
         "ci95": null,
         "n": 412
       },
-      "accent_cosine": {
+      "accent_cosine_commonaccent": {
         "mean": 0.6290066517455485,
         "ci95": 0.011138414141320555,
         "n": 412
       },
-      "accent_label_agreement": {
+      "accent_label_agreement_commonaccent": {
         "target_commonaccent_label": "ireland",
         "pred_labelled_as_target": 0.0,
         "gt_labelled_as_target": 0.03640776699029126,
         "pred_matches_gt_label": 0.308252427184466
+      },
+      "accent_label_agreement": {
+        "target_label": "irish",
+        "pred_labelled_as_target": 0.14563106796116504,
+        "gt_labelled_as_target": 0.21844660194174756,
+        "pred_matches_gt_label": 0.24514563106796117
+      },
+      "accent_cosine_genaid_raw": {
+        "mean": 0.8794937742255997,
+        "ci95": 0.007276595505662496,
+        "n": 412
+      },
+      "accent_cosine": {
+        "mean": 0.24708442454286977,
+        "ci95": 0.04103943624279571,
+        "n": 412
       }
     },
     "NorthernIrish": {
@@ -240,16 +317,32 @@
         "ci95": null,
         "n": 423
       },
-      "accent_cosine": {
+      "accent_cosine_commonaccent": {
         "mean": 0.6447817796651917,
         "ci95": 0.010036742706727223,
         "n": 423
       },
-      "accent_label_agreement": {
+      "accent_label_agreement_commonaccent": {
         "target_commonaccent_label": "ireland",
         "pred_labelled_as_target": 0.0,
         "gt_labelled_as_target": 0.17494089834515367,
         "pred_matches_gt_label": 0.3262411347517731
+      },
+      "accent_label_agreement": {
+        "target_label": "irish",
+        "pred_labelled_as_target": 0.028368794326241134,
+        "gt_labelled_as_target": 0.04728132387706856,
+        "pred_matches_gt_label": 0.4397163120567376
+      },
+      "accent_cosine_genaid_raw": {
+        "mean": 0.9185998493167638,
+        "ci95": 0.004606027566363758,
+        "n": 423
+      },
+      "accent_cosine": {
+        "mean": 0.42489760719220987,
+        "ci95": 0.02972658249892027,
+        "n": 423
       }
     },
     "Scottish": {
@@ -279,16 +372,32 @@
         "ci95": null,
         "n": 459
       },
-      "accent_cosine": {
+      "accent_cosine_commonaccent": {
         "mean": 0.5961903116801726,
         "ci95": 0.010058313493105427,
         "n": 459
       },
-      "accent_label_agreement": {
+      "accent_label_agreement_commonaccent": {
         "target_commonaccent_label": "scotland",
         "pred_labelled_as_target": 0.10675381263616558,
         "gt_labelled_as_target": 0.037037037037037035,
         "pred_matches_gt_label": 0.5054466230936819
+      },
+      "accent_label_agreement": {
+        "target_label": "scottish",
+        "pred_labelled_as_target": 0.6862745098039216,
+        "gt_labelled_as_target": 0.4444444444444444,
+        "pred_matches_gt_label": 0.5250544662309368
+      },
+      "accent_cosine_genaid_raw": {
+        "mean": 0.9275436682481103,
+        "ci95": 0.004706592872625606,
+        "n": 459
+      },
+      "accent_cosine": {
+        "mean": 0.7113761386060015,
+        "ci95": 0.01911545192449231,
+        "n": 459
       }
     }
   },
@@ -320,16 +429,32 @@
         "ci95": null,
         "n": 462
       },
-      "accent_cosine": {
+      "accent_cosine_commonaccent": {
         "mean": 0.5844106974152775,
         "ci95": 0.010138994554156943,
         "n": 462
       },
-      "accent_label_agreement": {
+      "accent_label_agreement_commonaccent": {
         "target_commonaccent_label": "england",
         "pred_labelled_as_target": 0.645021645021645,
         "gt_labelled_as_target": 0.23160173160173161,
         "pred_matches_gt_label": 0.41774891774891776
+      },
+      "accent_label_agreement": {
+        "target_label": "english",
+        "pred_labelled_as_target": 0.7510822510822511,
+        "gt_labelled_as_target": 0.7554112554112554,
+        "pred_matches_gt_label": 0.6688311688311688
+      },
+      "accent_cosine_genaid_raw": {
+        "mean": 0.9392671666708542,
+        "ci95": 0.0036934148273197295,
+        "n": 462
+      },
+      "accent_cosine": {
+        "mean": 0.746039336137739,
+        "ci95": 0.015775168674907372,
+        "n": 462
       }
     },
     "p281": {
@@ -359,16 +484,32 @@
         "ci95": null,
         "n": 459
       },
-      "accent_cosine": {
+      "accent_cosine_commonaccent": {
         "mean": 0.5961903116801726,
         "ci95": 0.010058313493105427,
         "n": 459
       },
-      "accent_label_agreement": {
+      "accent_label_agreement_commonaccent": {
         "target_commonaccent_label": "scotland",
         "pred_labelled_as_target": 0.10675381263616558,
         "gt_labelled_as_target": 0.037037037037037035,
         "pred_matches_gt_label": 0.5054466230936819
+      },
+      "accent_label_agreement": {
+        "target_label": "scottish",
+        "pred_labelled_as_target": 0.6862745098039216,
+        "gt_labelled_as_target": 0.4444444444444444,
+        "pred_matches_gt_label": 0.5250544662309368
+      },
+      "accent_cosine_genaid_raw": {
+        "mean": 0.9275436682481103,
+        "ci95": 0.004706592872625606,
+        "n": 459
+      },
+      "accent_cosine": {
+        "mean": 0.7113761386060015,
+        "ci95": 0.01911545192449231,
+        "n": 459
       }
     },
     "p288": {
@@ -398,16 +539,32 @@
         "ci95": null,
         "n": 412
       },
-      "accent_cosine": {
+      "accent_cosine_commonaccent": {
         "mean": 0.6290066517455485,
         "ci95": 0.011138414141320555,
         "n": 412
       },
-      "accent_label_agreement": {
+      "accent_label_agreement_commonaccent": {
         "target_commonaccent_label": "ireland",
         "pred_labelled_as_target": 0.0,
         "gt_labelled_as_target": 0.03640776699029126,
         "pred_matches_gt_label": 0.308252427184466
+      },
+      "accent_label_agreement": {
+        "target_label": "irish",
+        "pred_labelled_as_target": 0.14563106796116504,
+        "gt_labelled_as_target": 0.21844660194174756,
+        "pred_matches_gt_label": 0.24514563106796117
+      },
+      "accent_cosine_genaid_raw": {
+        "mean": 0.8794937742255997,
+        "ci95": 0.007276595505662496,
+        "n": 412
+      },
+      "accent_cosine": {
+        "mean": 0.24708442454286977,
+        "ci95": 0.04103943624279571,
+        "n": 412
       }
     },
     "p297": {
@@ -437,16 +594,32 @@
         "ci95": null,
         "n": 417
       },
-      "accent_cosine": {
+      "accent_cosine_commonaccent": {
         "mean": 0.7657888551696027,
         "ci95": 0.008692575968826534,
         "n": 417
       },
-      "accent_label_agreement": {
+      "accent_label_agreement_commonaccent": {
         "target_commonaccent_label": "us",
         "pred_labelled_as_target": 0.9400479616306955,
         "gt_labelled_as_target": 0.9712230215827338,
         "pred_matches_gt_label": 0.9280575539568345
+      },
+      "accent_label_agreement": {
+        "target_label": "us",
+        "pred_labelled_as_target": 0.841726618705036,
+        "gt_labelled_as_target": 0.947242206235012,
+        "pred_matches_gt_label": 0.829736211031175
+      },
+      "accent_cosine_genaid_raw": {
+        "mean": 0.9504653054533855,
+        "ci95": 0.004496694709040294,
+        "n": 417
+      },
+      "accent_cosine": {
+        "mean": 0.7835569000091654,
+        "ci95": 0.019130928699803967,
+        "n": 417
       }
     },
     "p304": {
@@ -476,16 +649,32 @@
         "ci95": null,
         "n": 423
       },
-      "accent_cosine": {
+      "accent_cosine_commonaccent": {
         "mean": 0.6447817796651917,
         "ci95": 0.010036742706727223,
         "n": 423
       },
-      "accent_label_agreement": {
+      "accent_label_agreement_commonaccent": {
         "target_commonaccent_label": "ireland",
         "pred_labelled_as_target": 0.0,
         "gt_labelled_as_target": 0.17494089834515367,
         "pred_matches_gt_label": 0.3262411347517731
+      },
+      "accent_label_agreement": {
+        "target_label": "irish",
+        "pred_labelled_as_target": 0.028368794326241134,
+        "gt_labelled_as_target": 0.04728132387706856,
+        "pred_matches_gt_label": 0.4397163120567376
+      },
+      "accent_cosine_genaid_raw": {
+        "mean": 0.9185998493167638,
+        "ci95": 0.004606027566363758,
+        "n": 423
+      },
+      "accent_cosine": {
+        "mean": 0.42489760719220987,
+        "ci95": 0.02972658249892027,
+        "n": 423
       }
     },
     "p317": {
@@ -515,21 +704,44 @@
         "ci95": null,
         "n": 423
       },
-      "accent_cosine": {
+      "accent_cosine_commonaccent": {
         "mean": 0.7711567699768301,
         "ci95": 0.0076801352261921885,
         "n": 423
       },
-      "accent_label_agreement": {
+      "accent_label_agreement_commonaccent": {
         "target_commonaccent_label": "canada",
         "pred_labelled_as_target": 0.061465721040189124,
         "gt_labelled_as_target": 0.02127659574468085,
         "pred_matches_gt_label": 0.91725768321513
+      },
+      "accent_label_agreement": {
+        "target_label": "canadian",
+        "pred_labelled_as_target": 0.04728132387706856,
+        "gt_labelled_as_target": 0.03309692671394799,
+        "pred_matches_gt_label": 0.851063829787234
+      },
+      "accent_cosine_genaid_raw": {
+        "mean": 0.9618271305943754,
+        "ci95": 0.003256212274710458,
+        "n": 423
+      },
+      "accent_cosine": {
+        "mean": 0.8129196058132888,
+        "ci95": 0.015484708631980938,
+        "n": 423
       }
     }
   },
-  "accent_side_metric_source": "articulatory-tts@d8b53da9ae940e3ba979b427c037ddd560952958 score_side_metric.py",
-  "eval_code_commit": "b585ba9e79a3f68cc6d855778809b32e76a980f0",
-  "accent_cosine_per_utt_source": "eval/score_accent_per_utt.py (same model/call path as articulatory-tts score_side_metric.py)",
-  "wer_whisper_normalized_rule": "corpus jiwer.wer over WhisperTokenizer.normalize(ref/hyp); pairs with empty normalized reference skipped (articulatory-tts b040aa1 rule)"
+  "accent_side_metric_source": "articulatory-tts@79f6066df175d8357d7a8f33e3ac18579aec05f8 score_side_metric.py (GenAID_v6, centroid-centered; genaid_accent.py; rescored 2026-09-16 on the original wav pairs)",
+  "eval_code_commit": "78cd11d7c5b1bb2b535f560cab8ca8f43fc56a78",
+  "accent_cosine_per_utt_source": "eval/score_accent_per_utt.py (same model/call path as articulatory-tts score_side_metric.py; GenAID_v6 (jzmzhong/GenAID@60317a8, CKPT+2024-07-21+23-06-07+00); centroid-centered: mean of the six speaker-balanced accent centroids of the VCTK-only training speakers (accent_metric_diag/export_centered_genaid.py, 2026-09-16); center_vector=genaid_emb_centroid_mean.npy)",
+  "wer_whisper_normalized_rule": "corpus jiwer.wer over WhisperTokenizer.normalize(ref/hyp); pairs with empty normalized reference skipped (articulatory-tts b040aa1 rule)",
+  "accent_side_metric_source_commonaccent": "articulatory-tts@d8b53da9ae940e3ba979b427c037ddd560952958 score_side_metric.py",
+  "side_metric_files": {
+    "accent_cosine": "/data/user_data/xoy/xtts_accent_eval/XTTS-v2-accent-finetune-filtered_full/self/eval_vctk_accent_genaid_centered.json",
+    "accent_cosine_genaid_raw": "/data/user_data/xoy/xtts_accent_eval/XTTS-v2-accent-finetune-filtered_full/self/eval_vctk_accent_genaid_centered.json"
+  },
+  "accent_side_metric_source_genaid_raw": "articulatory-tts@8cc3473e09215298c9b7136efd0d35f080380342 score_side_metric.py (GenAID_v6, genaid_accent.py; rescored 2026-09-14 on the original wav pairs)",
+  "accent_center_vector": "/home/xoy/wt-center/accent_metric_diag/results/genaid_emb_centroid_mean.npy"
 }

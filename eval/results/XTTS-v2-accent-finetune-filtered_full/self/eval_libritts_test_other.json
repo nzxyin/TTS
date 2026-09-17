@@ -51,6 +51,12 @@
       "n": 5106
     },
     "accent_cosine": {
+      "mean": 0.9056937672572054,
+      "ci95": 0.0024146437503730074,
+      "n": 5106,
+      "model": "GenAID_v6 (jzmzhong/GenAID@60317a8, CKPT+2024-07-21+23-06-07+00)"
+    },
+    "accent_cosine_commonaccent": {
       "mean": 0.6394409787829525,
       "ci95": 0.00573999191122636,
       "n": 5106
@@ -982,7 +988,11 @@
       }
     }
   },
-  "accent_side_metric_source": "articulatory-tts@d8b53da9ae940e3ba979b427c037ddd560952958 score_side_metric.py",
-  "eval_code_commit": "b585ba9e79a3f68cc6d855778809b32e76a980f0",
-  "wer_whisper_normalized_rule": "corpus jiwer.wer over WhisperTokenizer.normalize(ref/hyp); pairs with empty normalized reference skipped (articulatory-tts b040aa1 rule)"
+  "accent_side_metric_source": "articulatory-tts@8cc3473e09215298c9b7136efd0d35f080380342 score_side_metric.py (GenAID_v6, genaid_accent.py; rescored 2026-09-14 on the original wav pairs)",
+  "eval_code_commit": "8ab880492b256cd9e7863180413b96bb29805e23",
+  "wer_whisper_normalized_rule": "corpus jiwer.wer over WhisperTokenizer.normalize(ref/hyp); pairs with empty normalized reference skipped (articulatory-tts b040aa1 rule)",
+  "accent_side_metric_source_commonaccent": "articulatory-tts@d8b53da9ae940e3ba979b427c037ddd560952958 score_side_metric.py",
+  "side_metric_files": {
+    "accent_cosine": "/data/user_data/xoy/xtts_accent_eval/XTTS-v2-accent-finetune-filtered_full/self/eval_libritts_test_other_accent_genaid.json"
+  }
 }

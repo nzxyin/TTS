@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-09-17 -- checked-in LJSpeech / test-clean / test-other JSONs refreshed; centering provenance note (branch `eval/refresh-result-jsons`)
+
+- `eval/results/XTTS-v2-accent-finetune-filtered_full/self/eval_{ljspeech,libritts_test_clean,libritts_test_other}.json`
+  copied from their `/data` counterparts: the checked-in copies still carried the CommonAccent-era
+  `metrics.accent_cosine` (0.717 / 0.785 / 0.639, no `model` tag) although README/CLAUDE.md already quoted
+  the 2026-09-14 raw GenAID rescore (0.950 / 0.963 / 0.906). They now hold the GenAID value with
+  `accent_cosine_commonaccent` alongside, like `eval_vctk.json`; no other metric changed. Found by the
+  2026-09-17 post-merge audit of the accent-centering change.
+- CLAUDE.md: provenance note that `eval_vctk.json` records the centering vector by the removed
+  `/home/xoy/wt-center` worktree path (byte-identical file on articulatory-tts main; tracked as
+  nzxyin/articulatory-tts issue #57).
+
 ## 2026-09-17 -- VCTK accent-centering rescore complete (job 10473692); docs and results JSON refreshed (branch `eval/accent-centering`)
 
 - `eval/run_rescore_accent_centered.sbatch` (job 10473692, VCTK only) completed and is verified: the merged

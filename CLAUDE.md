@@ -59,7 +59,15 @@ chronological record of changes is in `CHANGELOG.md`.
   (95% CI)**; raw GenAID 0.930 and CommonAccent 0.663 kept in the JSON as superseded context. This file and
   `eval/README.md` now report the centered value everywhere the VCTK accent cosine is shown; LJSpeech /
   test-clean / test-other were out of scope for this rescore (no per-accent breakdown there) and still
-  report raw GenAID.
+  report raw GenAID (their checked-in JSONs under `eval/results/` were refreshed from `/data` on
+  2026-09-17 -- they had still carried the CommonAccent-era `accent_cosine` -- and now hold the 2026-09-14
+  raw GenAID value 0.950 / 0.963 / 0.906 with `accent_cosine_commonaccent` alongside). Provenance caveat:
+  the rescore ran with `ART_REPO=/home/xoy/wt-center` (the articulatory-tts PR #54 worktree, since removed),
+  so `eval_vctk.json` records `center_vector` / `accent_center_vector` as
+  `/home/xoy/wt-center/accent_metric_diag/results/genaid_emb_centroid_mean.npy`; the file is byte-identical
+  to `accent_metric_diag/results/genaid_emb_centroid_mean.npy` on articulatory-tts main (sha256
+  ce9ca6bc017b...379ef), the model tag's `center_vector=genaid_emb_centroid_mean.npy` is the durable
+  identifier (nzxyin/articulatory-tts issue #57).
 - **Per-accent accent similarity on VCTK (centered GenAID, `eval/score_accent_per_utt.py`, job 10473692):**
   Canadian 0.813, American 0.784, English 0.746, Scottish 0.711, Northern
   Irish 0.425, Irish 0.247 (raw GenAID, superseded: 0.962 / 0.950 / 0.939 /

@@ -30,6 +30,15 @@ reference repo's own `score_side_metric.py`. GenAID -- https://github.com/jzmzho
 a speaker-adversarial XLSR-53 accent identifier, 64-dim embedding -- replaced
 CommonAccent on 2026-09-14; the CommonAccent values are kept in every JSON as
 `accent_cosine_commonaccent` and are not comparable with the GenAID ones).
+**VCTK's `accent_cosine` was re-centered on 2026-09-16 (job 10473692, branch
+`eval/accent-centering`)** -- both the prediction and ground-truth GenAID
+embeddings have a fixed centering vector (the mean of the six
+speaker-balanced VCTK-training-speaker accent centroids) subtracted before
+the cosine; the raw (uncentered) GenAID value is kept in the JSON as
+`accent_cosine_genaid_raw`. LJSpeech / test-clean / test-other were out of
+scope for that rescore and still report raw GenAID -- **do not compare their
+`accent cos` column directly against VCTK's centered one**; each table below
+is labelled accordingly.
 
 ## Files
 
@@ -149,80 +158,109 @@ after Whisper's English normalizer -- the headline number. For GT/resynth
 `sparc_resynth_baselines/{gt,resynth}_transcripts_*.json`. The articulatory
 model rows were scored before that repo's 2026-09-08 normalizer fix, so they
 only have raw `WER`; its `werfix` re-scores (running at the time of writing)
-will provide `WER-n` for them. Every `accent cos` cell, including the SPARC and
-articulatory rows, is the GenAID value from the 2026-09-14 rescore
-(articulatory-tts job arrays 10441101/10441449); the CommonAccent-era values
-were 0.783 / 0.446 / 0.705 for the three VCTK reference rows.
+will provide `WER-n` for them. Every `accent cos` cell in the LJSpeech /
+test-clean / test-other tables, including the SPARC and articulatory rows
+there, is the raw GenAID value from the 2026-09-14 rescore (articulatory-tts
+job arrays 10441101/10441449); the CommonAccent-era values were
+0.783 / 0.446 / 0.705 for the three VCTK reference rows.
 
-| LJSpeech (n=150) | WER | WER-n | UTMOSv2 | DNSMOS ovr | p808 | sig | bak | spk cos | accent cos |
+**The VCTK table's `accent cos` column is different: it is the
+centroid-centered GenAID value from the 2026-09-16 rescore (job 10473692,
+branch `eval/accent-centering`)**, per the accent-metric decision recorded in
+`CLAUDE.md`. SPARC resynthesis (raw 0.966), the two articulatory reference
+rows (raw 0.857 / 0.919) and XTTS (raw 0.930) move to their centered values
+below (0.824 / 0.252 / 0.536 / 0.625 respectively -- the SPARC/articulatory
+centered values are as reported for those systems in the articulatory-tts
+centered rescore; they were not independently re-derived in this repo). The
+raw GenAID numbers are kept in `eval_vctk.json` as `accent_cosine_genaid_raw`.
+
+| LJSpeech (n=150) | WER | WER-n | UTMOSv2 | DNSMOS ovr | p808 | sig | bak | spk cos | accent cos (raw) |
 |---|---|---|---|---|---|---|---|---|---|
 | ground truth | 6.97 | 1.60 | 3.951 | 3.292 | 4.026 | 3.638 | 3.959 | -- | -- |
 | SPARC resynthesis | 6.78 | 1.83 | 3.196 | 3.357 | 3.909 | 3.614 | 4.121 | 0.611 | -- |
 | articulatory, softdtw large_dim 25k | 6.55 | -- | 3.242 | 3.297 | 3.837 | 3.591 | 4.048 | 0.440 | -- |
 | **XTTS-v2 accent (filtered)** | **10.22** | **2.44** | **3.158** | **3.402** | **4.047** | **3.661** | **4.136** | **0.682** | **0.950** |
 
-| LibriTTS-R test-clean (n=4830) | WER | WER-n | UTMOSv2 | DNSMOS ovr | p808 | sig | bak | spk cos | accent cos |
+| LibriTTS-R test-clean (n=4830) | WER | WER-n | UTMOSv2 | DNSMOS ovr | p808 | sig | bak | spk cos | accent cos (raw) |
 |---|---|---|---|---|---|---|---|---|---|
 | ground truth | 10.60 | 2.27 | 3.253 | 3.136 | 3.708 | 3.467 | 3.927 | -- | -- |
 | SPARC resynthesis | 11.25 | 3.10 | 3.034 | 3.240 | 3.769 | 3.543 | 4.024 | 0.826 | -- |
 | articulatory, softdtw large_dim 25k | 8.44 | -- | 3.124 | 3.219 | 3.769 | 3.527 | 4.005 | 0.689 | -- |
 | **XTTS-v2 accent (filtered)** | **10.74** | **2.59** | **3.122** | **3.316** | **3.916** | **3.592** | **4.079** | **0.680** | **0.963** |
 
-| LibriTTS-R test-other (n=5106) | WER | WER-n | UTMOSv2 | DNSMOS ovr | p808 | sig | bak | spk cos | accent cos |
+| LibriTTS-R test-other (n=5106) | WER | WER-n | UTMOSv2 | DNSMOS ovr | p808 | sig | bak | spk cos | accent cos (raw) |
 |---|---|---|---|---|---|---|---|---|---|
 | ground truth | 13.51 | 4.11 | 3.131 | 3.042 | 3.571 | 3.391 | 3.869 | -- | -- |
 | SPARC resynthesis | 15.46 | 6.33 | 2.935 | 3.166 | 3.642 | 3.487 | 3.978 | 0.797 | -- |
 | articulatory, softdtw large_dim 25k | 10.95 | -- | 3.092 | 3.165 | 3.677 | 3.488 | 3.971 | 0.606 | -- |
 | **XTTS-v2 accent (filtered)** | **12.99** | **2.95** | **2.984** | **3.264** | **3.837** | **3.545** | **4.062** | **0.623** | **0.906** |
 
-| VCTK held-out speakers (n=2596) | WER | WER-n | UTMOSv2 | DNSMOS ovr | p808 | sig | bak | spk cos | accent cos |
+| VCTK held-out speakers (n=2596) | WER | WER-n | UTMOSv2 | DNSMOS ovr | p808 | sig | bak | spk cos | accent cos (centered) |
 |---|---|---|---|---|---|---|---|---|---|
 | ground truth | 3.70 | 1.21 | 3.593 | 3.202 | 3.640 | 3.517 | 4.003 | -- | -- |
-| SPARC resynthesis | 5.77 | 2.73 | 3.145 | 3.189 | 3.545 | 3.492 | 4.031 | 0.646 | 0.966 |
-| articulatory, softdtw large_dim 25k (zero-shot, known rate) | 3.42 | -- | 2.651 | 3.132 | 3.620 | 3.479 | 3.927 | 0.424 | 0.857 |
-| articulatory, VCTK fine-tune softdtw replay 25k (known rate) | 3.75 | -- | 3.326 | 3.247 | 3.597 | 3.536 | 4.068 | 0.519 | 0.919 |
-| **XTTS-v2 accent (filtered)** | **3.80** | **1.42** | **3.124** | **3.205** | **3.737** | **3.512** | **4.039** | **0.643** | **0.930** |
+| SPARC resynthesis | 5.77 | 2.73 | 3.145 | 3.189 | 3.545 | 3.492 | 4.031 | 0.646 | 0.824 |
+| articulatory, softdtw large_dim 25k (zero-shot, known rate) | 3.42 | -- | 2.651 | 3.132 | 3.620 | 3.479 | 3.927 | 0.424 | 0.252 |
+| articulatory, VCTK fine-tune softdtw replay 25k (known rate) | 3.75 | -- | 3.326 | 3.247 | 3.597 | 3.536 | 4.068 | 0.519 | 0.536 |
+| **XTTS-v2 accent (filtered)** | **3.80** | **1.42** | **3.124** | **3.205** | **3.737** | **3.512** | **4.039** | **0.643** | **0.625** |
 
 XTTS per VCTK accent (one held-out speaker per accent; from `by_accent` in
 `eval_vctk.json`; accent tag passed in parentheses). Accent cosine per
 utterance comes from `eval/score_accent_per_utt.py` (same GenAID model and
-call path as the reference side metric; its overall mean reproduces the
-merged 0.930 exactly). The last three columns are GenAID's 13-way top
-label: how often the synthesized utterance is labelled with the target
-class (American->`us`, Canadian->`canadian`, English->`english`, Irish and
+call path as the reference side metric, now centroid-centered per the
+2026-09-16 rescore, job 10473692; its overall mean reproduces the merged
+0.625 exactly). The per-group raw GenAID value from the 2026-09-14 rescore
+is preserved alongside as `accent_cosine_genaid_raw` (sextet: American
+0.950, Canadian 0.962, English 0.939, Irish 0.879, Northern Irish 0.919,
+Scottish 0.928). The last three columns are GenAID's 13-way top label: how
+often the synthesized utterance is labelled with the target class
+(American->`us`, Canadian->`canadian`, English->`english`, Irish and
 Northern Irish->`irish`, Scottish->`scottish`), how often the *ground-truth*
-recording is, and how often the two labels agree. The CommonAccent version
-of this table (2026-09-08) is preserved in the JSON under
-`accent_cosine_commonaccent` / `accent_label_agreement_commonaccent`.
+recording is, and how often the two labels agree -- this label-agreement
+view is unaffected by centering. The CommonAccent version of this table
+(2026-09-08) is preserved in the JSON under `accent_cosine_commonaccent` /
+`accent_label_agreement_commonaccent`.
 
-| accent (tag) | speaker | n | accent cos (ci95) | WER | UTMOSv2 | spk cos | pred labelled target | GT labelled target | pred = GT label |
+| accent (tag) | speaker | n | accent cos (centered, ci95) | WER | UTMOSv2 | spk cos | pred labelled target | GT labelled target | pred = GT label |
 |---|---|---|---|---|---|---|---|---|---|
-| American (US) | p297 | 417 | 0.950 (0.004) | 3.46 | 3.192 | 0.603 | 0.842 | 0.947 | 0.830 |
-| Canadian (Canada) | p317 | 423 | 0.962 (0.003) | 5.05 | 2.889 | 0.694 | 0.047 | 0.033 | 0.851 |
-| English (England) | p270 | 462 | 0.939 (0.004) | 5.13 | 2.989 | 0.615 | 0.751 | 0.755 | 0.669 |
-| Irish (Ireland) | p288 | 412 | 0.879 (0.007) | 2.24 | 3.300 | 0.640 | 0.146 | 0.218 | 0.245 |
-| Northern Irish (Ireland) | p304 | 423 | 0.919 (0.005) | 1.92 | 3.496 | 0.615 | 0.028 | 0.047 | 0.440 |
-| Scottish (Scotland) | p281 | 459 | 0.928 (0.005) | 4.69 | 2.913 | 0.685 | 0.686 | 0.444 | 0.525 |
+| American (US) | p297 | 417 | 0.784 (0.019) | 3.46 | 3.192 | 0.603 | 0.842 | 0.947 | 0.830 |
+| Canadian (Canada) | p317 | 423 | 0.813 (0.015) | 5.05 | 2.889 | 0.694 | 0.047 | 0.033 | 0.851 |
+| English (England) | p270 | 462 | 0.746 (0.016) | 5.13 | 2.989 | 0.615 | 0.751 | 0.755 | 0.669 |
+| Irish (Ireland) | p288 | 412 | 0.247 (0.041) | 2.24 | 3.300 | 0.640 | 0.146 | 0.218 | 0.245 |
+| Northern Irish (Ireland) | p304 | 423 | 0.425 (0.030) | 1.92 | 3.496 | 0.615 | 0.028 | 0.047 | 0.440 |
+| Scottish (Scotland) | p281 | 459 | 0.711 (0.019) | 4.69 | 2.913 | 0.685 | 0.686 | 0.444 | 0.525 |
 
 Per-accent reading notes:
 
-- GenAID cosines live in a compressed band (0.88-0.96 here; 0.85-0.99 across
-  every system evaluated on 2026-09-14), so read differences, not absolute
-  values. The two North-American speakers are still the best preserved
-  (0.95-0.96) and Irish is now clearly the weakest (0.879), with English,
-  Scottish and Northern Irish in between (0.92-0.94) -- under CommonAccent
-  the split was North-American ~0.77 vs everything British/Irish 0.58-0.65.
-  With one speaker per accent, speaker and accent effects cannot be
-  separated here.
-- The label columns are an accent-classification view, not the metric.
-  GenAID recognises the American, English and Scottish recordings (95%, 76%,
-  44% labelled with their own class; CommonAccent managed 97%, 23%, 4%) but
-  still not the Canadian (3%, called `us`) or Northern Irish (5%) speaker,
-  so "pred labelled target" is informative for the first three accents only.
-  There, the synthesized speech is labelled American 84% (GT 95%), English
-  75% (GT 76%) and Scottish 69% of the time -- more often than the Scottish
-  recordings themselves (44%), i.e. the Scotland tag produces a
-  classifier-recognisable Scottish accent.
+- **Centering (2026-09-16, job 10473692) replaces the raw GenAID reading
+  this bullet used to give.** Raw GenAID cosines lived in a compressed band
+  (0.88-0.96 here; 0.85-0.99 across every system evaluated on 2026-09-14)
+  where only *relative* differences were readable. Centered cosines use a
+  real scale instead: 0 is the similarity of unrelated accents, 0.019 is the
+  mismatched-accent floor, and SPARC's own resynthesis ceiling is 0.824 (see
+  the dataset table above). Against that scale, American/Canadian/English/
+  Scottish now cluster together (0.71-0.81) while Irish and Northern Irish
+  separate out sharply (0.247 / 0.425) -- a split the raw band hid. Ranking
+  is unchanged by centering, both at the system level (SPARC 0.824 > XTTS
+  0.625 > articulatory VCTK fine-tune 0.536 > articulatory zero-shot 0.252)
+  and per accent (Canadian > American > English > Scottish > Northern Irish
+  > Irish), but the spread widens a lot: 0.083 raw (0.879-0.962) to 0.566
+  centered (0.247-0.813). Raw sextet (superseded, kept as
+  `accent_cosine_genaid_raw`): American 0.950, Canadian 0.962, English
+  0.939, Scottish 0.928, Northern Irish 0.919, Irish 0.879; the
+  CommonAccent-era split was North-American ~0.77 vs everything
+  British/Irish 0.58-0.65. With one speaker per accent, speaker and accent
+  effects cannot be separated here.
+- The label columns are an accent-classification view, not the metric, and
+  are **unchanged by centering** (centering only shifts the cosine, not the
+  classifier's top-1 label). GenAID recognises the American, English and
+  Scottish recordings (95%, 76%, 44% labelled with their own class;
+  CommonAccent managed 97%, 23%, 4%) but still not the Canadian (3%, called
+  `us`) or Northern Irish (5%) speaker, so "pred labelled target" is
+  informative for the first three accents only. There, the synthesized
+  speech is labelled American 84% (GT 95%), English 75% (GT 76%) and
+  Scottish 69% of the time -- more often than the Scottish recordings
+  themselves (44%), i.e. the Scotland tag produces a classifier-recognisable
+  Scottish accent.
 - Per-speaker accent cosine is also in `eval_vctk.json` (`by_speaker`) and
   the per-utterance values with both labels in
   `/data/user_data/xoy/xtts_accent_eval/.../self/eval_vctk_accent_per_utt.json`
@@ -253,4 +291,6 @@ Reading notes:
 - **Accent cosine is against the ground-truth recording**, so for LJSpeech/
   LibriTTS it mostly measures how much the `US` tag plus the prompt preserve
   the speaker's own accent character; on VCTK it is the in-domain number.
-  The reference only reports it for VCTK.
+  The reference only reports it for VCTK. LJSpeech/LibriTTS-R stay raw
+  GenAID; VCTK is centroid-centered as of 2026-09-16 (job 10473692) -- its
+  raw value is kept as `accent_cosine_genaid_raw`.
